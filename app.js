@@ -11,7 +11,7 @@ var methodOverride          =  require("method-override");
 mongoose.connect("mongodb://localhost:27017/Dailylife", { useNewUrlParser: true , useUnifiedTopology: true  });
 
 //Require your routes here:
-
+var commentRoutes = require("./routes/comments");
 
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + "/public"));
@@ -21,9 +21,13 @@ app.use(methodOverride("_method"));
 
 
 //use your Routes here for now i'm making dummy landing page:
-app.get("/",(req,res) => res.render("landing.ejs"));
+app.get("/",function(req,res){
+    res.render("landing");
+});
 
-
+app.use("/comments",commentRoutes);
 
 var port = process.env.PORT || 3000;
-app.listen(port,() => console.log(" okay Dailylife Server is listening"));
+app.listen(port,function(){
+    console.log("Server started");
+});
