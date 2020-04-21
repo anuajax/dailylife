@@ -1,4 +1,5 @@
 // Basic Setup : 
+require("dotenv").config();
 var express                 =  require("express");
 var app                     =  express();
 var mongoose                =  require("mongoose");
@@ -7,7 +8,10 @@ var passport                =  require("passport");
 var LocalStrategy           =  require("passport-local");
 var passportLocalMongoose   =  require("passport-local-mongoose");
 var methodOverride          =  require("method-override");
-
+var async                   =  require("async");
+var nodemailer              =  require("nodemailer");
+var crypto                  =  require("crypto");
+var flash                   =  require("connect-flash");
 //MODELS:
 var User                    =  require("./models/User");
 
@@ -24,10 +28,12 @@ mongoose.connect("mongodb://localhost:27017/Dailylife", { useNewUrlParser: true 
 //-----------------*--------------------*-----------------------------------------*-----------------------------------
 
 
+
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + "/public"));
 app.use(bodyparser.urlencoded({extended: true}));
 app.use(bodyparser.json());
+app.use(flash());
 
 //-------------------------------------------------------------------------------------------------------------------
 //PASSPORT CONFIG :
