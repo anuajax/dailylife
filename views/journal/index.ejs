@@ -2,14 +2,11 @@
 	Journal Route 
 </h1>
 <p>
-	Here you will see the journal of particular user
+	Here you will see the all journal of particular user
 </p>
 
 
 
-<% journals.forEach(function(journal){ %>
-                       <h4><%= journal.title %></h4>
-                   <p>
-                       <%= journal.description %>
-                   </p>
+<% user.journals.forEach(function(journal){ %>
+                       <p><%= journal.text %></p>
 <% }); %>

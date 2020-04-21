@@ -9,36 +9,23 @@ var passportLocalMongoose   =  require("passport-local-mongoose");
 var methodOverride          =  require("method-override");
 var Journal 				=  require("./models/journal");
 
-<<<<<<< HEAD
-=======
 //MODELS:
 var User                    =  require("./models/User");
->>>>>>> 2abb784953e9cc3db7a6b3fc68c800e2183aaa27
 
 
 
 
-<<<<<<< HEAD
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
-mongoose.set('useUnifiedTopology', true);
-=======
 //Require your ROUTES here:
 var commentRoutes   =   require("./routes/comments");
-var authRoutes      =   require("./routes/authorization");      
+var authRoutes      =   require("./routes/authorization");   
+var journalRoutes   =   require("./routes/journal");
+
 
 
 //Database connection
->>>>>>> 2abb784953e9cc3db7a6b3fc68c800e2183aaa27
 mongoose.connect("mongodb://localhost:27017/Dailylife", { useNewUrlParser: true , useUnifiedTopology: true  });
 //-----------------*--------------------*-----------------------------------------*-----------------------------------
 
-<<<<<<< HEAD
-Require your routes here:
-var commentRoutes = require("./routes/comments");
-=======
->>>>>>> 2abb784953e9cc3db7a6b3fc68c800e2183aaa27
 
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + "/public"));
@@ -71,53 +58,7 @@ app.get("/",function(req,res){
 });
 
 
-
-//INDEX -> show all journals
-app.get("/journal", function(req,res){
-	// Get all journals from DB
-	Journal.find({}, function(err, allJournals){
-	if(err){
-	console.log(err);
-	} else {
-          res.render("journal/index", {journals:allJournals});
-       }
-    });
-});
-
-//CREATE - add new journal to DB
-app.post("/journal", function(req, res){
-    // get data from form and add to journal array
-    var title = req.body.title;
-    var desc = req.body.description;
-    var newJournal = {title: title, description: desc}
-    // Create a new journal and save to DB
-    Journal.create(newJournal, function(err, newlyCreated){
-        if(err){
-            console.log(err);
-        } else {
-            //redirect back to journal page
-            res.redirect("/journal");
-        }
-    });
-});
-
-
-//NEW - show form to create new journal
-app.get("/journal/new", function(req, res){
-   res.render("journal/new.ejs"); 
-});
-
-
-
-
-
-
-
-
-
-// var journalRoutes = require("./routes/journal");
-
-// app.use("/journals",journalRoutes);
+app.use(journalRoutes);
 app.use("/comments",commentRoutes);
 app.use(authRoutes);
 
