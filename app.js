@@ -19,8 +19,8 @@ mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
 mongoose.connect("mongodb://localhost:27017/Dailylife", { useNewUrlParser: true , useUnifiedTopology: true  });
 
-//Require your routes here:
-// var commentRoutes = require("./routes/comments");
+Require your routes here:
+var commentRoutes = require("./routes/comments");
 
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + "/public"));
@@ -82,7 +82,7 @@ app.get("/journal/new", function(req, res){
 // var journalRoutes = require("./routes/journal");
 
 // app.use("/journals",journalRoutes);
-// app.use("/comments",commentRoutes);
+app.use("/comments",commentRoutes);
 
 var port = process.env.PORT || 3000;
 app.listen(port,function(){
