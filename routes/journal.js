@@ -1,40 +1,61 @@
 var express = require("express");
 var router = express.Router({mergeParams:true});
+var User = require("../models/User");
 var Journal =  require("../models/journal");
 
-//INDEX -> show all journals
-router.get("/journal", function(req,res){
-	// Get all journals from DB
-	Journal.find({}, function(err, allJournals){
-	if(err){
-	console.log(err);
-	} else {
-          res.render("journal/index", {journals:allJournals});
-       }
-    });
+//Index route to show all routes
+router.get("/user/:id/journal",function(req,res){
+    User.findById(req.params.id, function(err, user){
+        if(err)
+        {
+            console.log(err);
+        }
+        else
+        {
+            res,render("journal/index",{user: user});
+        }
+    }
+})
+
+//New Journal
+router.get("/user/:id/journal/new", function(req,res){
+	User.findById(req.params.id, function(err, user){
+        if(err)
+        {
+            console.log(err);
+        }
+        else
+        {
+            res.render("journal/new",{user: user});
+        }
+    })
 });
 
 //CREATE - add new journal to DB
-router.post("/journal", function(req, res){
-    // get data from form and add to journal array
-    var title = req.body.title;
-    var desc = req.body.description;
-    var newJournal = {title: title, description: desc}
-    // Create a new journal and save to DB
-    Journal.create(newJournal, function(err, newlyCreated){
-        if(err){
-            console.log(err);
-        } else {
-            //redirect back to journal page
-            res.redirect("/journal");
+router.post("/user/:id/journal", function(req, res){
+    User.findById(req.params.id, function(err, userFound){
+        if(err)
+        {
+            res.redirect("/user");
         }
-    });
+        else
+        {
+            Journal.create(req.body.Journal,function(err, journal){
+                journal.author.id = req.user._id;
+                journal.author.username = req.user.username;
+
+                journal.save();
+                userFound.journals.push(journal);
+                userFound.save();
+                res.redirect('/user');
+            })
+        }
+
+    })
 });
 
 
-//NEW - show form to create new journal
-router.get("/journal/new", function(req, res){
-   res.render("journal/new.ejs"); 
-});
+
+
 
 module.exports = router;

@@ -7,6 +7,8 @@ var UserSchema = new mongoose.Schema({
     phonenumber: {type:String,unique: true},
     resetPasswordToken: String,
     resetPasswordExpires: Date
+    //jab journal model define karega to uska naam journals rakhna
+    //because m journals use kar raha hu age
 });
 UserSchema.plugin(passportLocalMongoose);
 module.exports = mongoose.model("User",UserSchema);
