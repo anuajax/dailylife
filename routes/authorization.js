@@ -22,14 +22,14 @@ router.post("/register",function(req,res,next){
 		});
 	  },
 	  function(token, done) {
-		User.findOne({ email: req.body.email }, function(err, user) {
+		User.findOne({ username: req.body.username }, function(err, user) {
 		  if (user) {
         console.log('error  account with that email address already exists.');
 			return res.redirect('/register');
 		  }
-      user = new User({username: req.body.username, email: req.body.email,password:req.body.password, phonenumber: req.body.phonenumber});
+      user = new User({firstname: req.body.firstname,lastname:req.body.lastname,username: req.body.username, email: req.body.email,password:req.body.password, phonenumber: req.body.phonenumber});
 		  user.verificationToken = token;
-		  user.verificationTokenExpires = Date.now() + 7200000; // 2 hour
+		  user.verificationTokenExpires = Date.now() + 10800000; // 3 hour
   
 		  user.save(function(err) {
 			done(err, token, user);
@@ -64,76 +64,50 @@ router.post("/register",function(req,res,next){
 	  });
     });
 
-router.get('/verify/:token', function(req, res) {
+router.get('/verify/:token',function(req, res) {
       User.findOne({ verificationToken: req.params.token, verificationTokenExpires: { $gt: Date.now() } }, function(err, user) {
       if (!user) {
     console.log('Password reset token is invalid or has expired.Cant find User for this token');
-          }
-          user.isVerified = true;
-          user.save(function (err) {
+          } 
+          else{ 
+            user.isVerified = true;
+          User.register(user,req.params.isVerified,function (err) {
               if (err) { return res.status(500).send({ msg: err.message }); }
               res.status(200).send("The account has been verified. Please log in.");
           });
-      res.render('../views/login.ejs', {token: req.params.token});
+          user.save(function (err) {
+            if (err) { return res.status(500).send({ msg: err.message }); }
+        });
+         console.log(user);
+      res.redirect('/login');
+        }
           });
       });
-// // Make sure this account doesn't already exist
-// User.findOne({ email: req.body.email }, function (err, user) {
-//   // Make sure user doesn't already exist
-//   if (user) return res.status(400)
-//   .send({ msg: 'The email address you have entered is already associated with another account.' });
 
-//     var NewUser = new User({username: req.body.username, email: req.body.email, phonenumber: req.body.phonenumber});
-
-//     NewUser.save(function (err) {
-//       if (err)  return res.status(500).send({ msg: err.message });
-
-//       // Create a verification token for this user
-//       var token = new Token({ _userId: user._id, token: crypto.randomBytes(16).toString('hex') });
-
-//       // Save the verification token
-//       token.save(function (err) {
-//           if (err) return res.status(500).send({ msg: err.message });
-//            // Send the email
-//            var transporter = nodemailer.createTransport({ service: 'GMAIL', auth: { user: 'hiimanurag122@gmail.com',
-//             pass: process.env.SENDGRID_PASSWORD } });
-//            var mailOptions = { from: 'no-reply@yourwebapplication.com', to: user.email, subject: 'Account Verification Token', text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n' };
-//            transporter.sendMail(mailOptions, function (err) {
-//                if (err) { return res.status(500).send({ msg: err.message }); }
-//                res.status(200).send('A verification email has been sent to ' + user.email + '.');
-//            });
-//        });
-//       });
-//     });
-
-
-//     User.register(NewUser,req.body.password,(err,user) => {
-//         if(err)
-//         return res.render("register.ejs");
-//         else
-//         console.log(`${user.username} is registered`);
-//         passport.authenticate("local")(req, res, () => res.redirect("/"));
-//     });
-// });
 
 //LOGIN
-router.get("/login",(req,res) => {res.render("login.ejs")});
 
-router.post("/login",function(req,res,next){
+router.get("/login",(req,res) => {res.render("login.ejs")});
+router.post("/login",function(req,res){
   User.findOne({username:req.body.username},function(err,user){
-    if (!user) return res.status(401).send({ msg: 'The email address ' + req.body.email + ' is not associated with any account.'});
-  if(!user.isVerified) return res.status(401).send({ type: 'not-verified', msg: 'Your account has not been verified.' });
-  else { 
-  passport.authenticate("local",{
-//successRedirect : "/",
-failureRedirect: "/login"}),
-function(req,res){
-	res.redirect(req.session.returnTo || '/');
-    delete req.session.returnTo;
-}
-  }
-});
+     if (!user) {
+       req.flash('error',"User not found!");
+      return res.redirect("/login");
+     }
+   console.log(user);
+    if(user.isVerified===false) return res.status(401).send({ type: 'not-verified', msg: 'Your account has not been verified.' });
+  if(user.password === req.body.password){
+    passport.authenticate("local",{
+//  successRedirect : "/comments/new",
+failureRedirect: "/login",
+failureFlash: 'Invalid username/password'});
+res.redirect(req.session.returnTo || '/comments/new');
+ 
+    }
+    else {return res.redirect("/login");}
   });
+  req.flash("error","Invalid Password");
+});
 
 //LOGOUT
 router.get("/logout",(req,res) => {
