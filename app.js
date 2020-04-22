@@ -13,6 +13,8 @@ var nodemailer              =  require("nodemailer");
 var crypto                  =  require("crypto");
 var cookieParser            =  require("cookie-parser");
 var flash                   =  require("connect-flash");
+var Journal 				=  require("./models/journal");
+
 //MODELS:
 var User                    =  require("./models/User");
 
@@ -21,7 +23,9 @@ var User                    =  require("./models/User");
 
 //Require your ROUTES here:
 var commentRoutes   =   require("./routes/comments");
-var authRoutes      =   require("./routes/authorization");      
+var authRoutes      =   require("./routes/authorization");   
+var journalRoutes   =   require("./routes/journal");
+
 
 
 //Database connection
@@ -75,6 +79,8 @@ app.get("/",function(req,res){
     res.render("landing");
 });
 
+
+app.use(journalRoutes);
 app.use("/comments",commentRoutes);
 app.use(authRoutes);
 

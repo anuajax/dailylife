@@ -12,6 +12,10 @@ var UserSchema = new mongoose.Schema({
     resetPasswordExpires: Date,
     verificationToken: String,
     verificationTokenExpires: Date
+    resetPasswordExpires: Date
+    //jab journal model define karega to uska naam journals rakhna
+    //because m journals use kar raha hu age
+// 3f040a5d53e4d5674a917ed458dacd340fe1c6e5
 });
 UserSchema.plugin(passportLocalMongoose);
 module.exports = mongoose.model("User",UserSchema);
