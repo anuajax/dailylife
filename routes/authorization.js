@@ -22,7 +22,7 @@ router.post("/register",function(req,res,next){
 		});
 	  },
 	  function(token, done) {
-		User.findOne({ username: req.body.username }, function(err, user) {
+		User.findOne({ email: req.body.email }, function(err, user) {
 		  if (user) {
         console.log('error  account with that email address already exists.');
 			return res.redirect('/register');

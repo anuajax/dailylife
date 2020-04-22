@@ -1,15 +1,17 @@
-ul
-{
+
+ul{
     display: flex;
     list-style-type: none;
-    justify-content: space-around;
+    margin-left: 60vw;
 
 }
-li{
+nav > li{
     list-style-type: none;
     color: bisque;
 }
 a{
+    padding-left: 10px;
     text-decoration: none;
     color: white;
+    
 }
