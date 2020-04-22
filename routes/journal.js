@@ -12,10 +12,10 @@ router.get("/user/:id/journal",function(req,res){
         }
         else
         {
-            res,render("journal/index",{user: user});
+            res.render("journal/index",{user: user});
         }
     }
-})
+)})
 
 //New Journal
 router.get("/user/:id/journal/new", function(req,res){
