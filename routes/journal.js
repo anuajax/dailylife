@@ -14,7 +14,7 @@ router.get("/user/:id/journal",function(req,res){
         {
             res,render("journal/index",{user: user});
         }
-    }
+    })
 })
 
 //New Journal
