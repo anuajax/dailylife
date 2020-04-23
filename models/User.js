@@ -14,6 +14,13 @@ var UserSchema = new mongoose.Schema({
     verificationToken: String,
     verificationTokenExpires: Date,
     resetPasswordExpires: Date,
+    // i have taken the liberty and declared journal : Jaskaran
+
+    journals: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Journal"
+    }],
+
     article:[
         {
             type:mongoose.Schema.Types.ObjectId,
