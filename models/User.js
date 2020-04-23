@@ -1,5 +1,6 @@
-var mongoose = require("mongoose");
+var mongoose              = require("mongoose");
 var passportLocalMongoose = require("passport-local-mongoose");
+
 var UserSchema = new mongoose.Schema({
     firstname: {type: String,required: true},
     lastname: String,
@@ -18,8 +19,16 @@ var UserSchema = new mongoose.Schema({
     journals: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Journal"
-    }]
+    }],
 
+    article:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Article"
+        }
+    ]
+    //jab journal model define karega to uska naam journals rakhna
+    //because m journals use kar raha hu age
 // 3f040a5d53e4d5674a917ed458dacd340fe1c6e5
 });
 UserSchema.plugin(passportLocalMongoose);

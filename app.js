@@ -25,6 +25,7 @@ var User                    =  require("./models/User");
 var commentRoutes   =   require("./routes/comments");
 var authRoutes      =   require("./routes/authorization");   
 var journalRoutes   =   require("./routes/journal");
+var articleRoutes   =   require("./routes/article");
 
 
 
@@ -83,7 +84,7 @@ app.get("/",function(req,res){
 app.use(journalRoutes);
 app.use("/comments",commentRoutes);
 app.use(authRoutes);
-
+app.use("/article",articleRoutes);
 
 
 
