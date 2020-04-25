@@ -9,7 +9,7 @@ var express    = require("express"),
 //================\\
 
 //ADD a new comment
-router.get("/new",middleware.isLoggedIn,function(req,res){
+router.get("/new",function(req,res){
     article.findById(req.params.id,function(err,article){
         if(err){
             router.redirect("back");
@@ -20,7 +20,7 @@ router.get("/new",middleware.isLoggedIn,function(req,res){
 });
 
 //CREATE a comment
-router.post("/new",middleWare.isLoggedIn,function(req,res){
+router.post("/new",function(req,res){
     article.findById(req.params.id,function(err,article){
         if(err){
             res.redirect("back");
@@ -30,7 +30,7 @@ router.post("/new",middleWare.isLoggedIn,function(req,res){
     });
 })
 //EDIT your comment
-router.get("/:comment_id/edit",middleWare.commentOwner,function(req,res){
+router.get("/:comment_id/edit",function(req,res){
     comment.findById(req.params.comment_id,function(err,foundComment){
         if(err){
             res.redirect("back");
@@ -41,7 +41,7 @@ router.get("/:comment_id/edit",middleWare.commentOwner,function(req,res){
 });
 
 //Save updated comment
-router.put("/:comment_id",middleWare.commentOwner,function(req,res){
+router.put("/:comment_id",function(req,res){
     comment.findByIdAndUpdate(req.params.id,function(err,updatedComment){
         if(err){
             res.redirect("back");

@@ -1,6 +1,6 @@
 var express     = require("express"),
     router      = express.Router({mergeParams:true}),
-    user        = require("../models/user"),
+    User        = require("../models/User"),
     article     = require("../models/article"),
     middleware  = require("../middleware");
 //================\\
@@ -9,7 +9,7 @@ var express     = require("express"),
 
 //ADD a new article
 router.get("/new",middleware.isLoggedIn,function(req,res){
-    user.findById(req.params.id,function(err,foundUser){
+    User.findById(req.params.id,function(err,foundUser){
         if(err){
             res.redirect("back");
         }else{
@@ -20,7 +20,7 @@ router.get("/new",middleware.isLoggedIn,function(req,res){
 
 //CREATE a new article
 router.post("/new",middleware.isLoggedIn,function(req,res){
-    user.findById(req.params.id,function(err,foundUser){
+    User.findById(req.params.id,function(err,foundUser){
         if(err){
             res.redirect("back");
         }else{
@@ -28,3 +28,5 @@ router.post("/new",middleware.isLoggedIn,function(req,res){
         }
     });
 })
+
+module.exports = router;
