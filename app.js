@@ -29,6 +29,10 @@ var articleRoutes   =   require("./routes/article");
 
 
 
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+mongoose.set('useUnifiedTopology', true);
 //Database connection
 mongoose.connect("mongodb://localhost:27017/Dailylife", { useNewUrlParser: true , useUnifiedTopology: true  });
 //-----------------*--------------------*-----------------------------------------*-----------------------------------

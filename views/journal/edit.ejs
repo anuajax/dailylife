@@ -1,6 +1,10 @@
 <%- include("../partials/header") -%>
 
 
+<div style="width: 30%; margin:30px auto">
+
+<h4>Edit Journal</h4>    
+
 <form action="/user/<%= user_id %>/journal/<%= journal._id %>?_method=PUT" method="POST">
     <div class="form-group">
         <input class="form-control" type="text" name="journal[text]" value="<%= journal.text %>">
@@ -9,5 +13,7 @@
         <button class="btn btn-lg btn-primary btn-block">Submit!</button>
     </div>
 </form>
+
+</div>
 
 <%- include("../partials/footer") -%>

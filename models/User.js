@@ -13,7 +13,6 @@ var UserSchema = new mongoose.Schema({
     resetPasswordExpires: Date,
     verificationToken: String,
     verificationTokenExpires: Date,
-    resetPasswordExpires: Date,
     // i have taken the liberty and declared journal : Jaskaran
 
     journals: [{
