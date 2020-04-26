@@ -12,10 +12,12 @@ router.get("/user/:id/journal",function(req,res){
         }
         else
         {
-            res,render("journal/index",{user: user});
+            res.render("journal/index",{user: user});
         }
     })
-})
+
+});
+
 
 //New Journal
 router.get("/user/:id/journal/new", function(req,res){
@@ -41,17 +43,60 @@ router.post("/user/:id/journal", function(req, res){
         else
         {
             Journal.create(req.body.Journal,function(err, journal){
-                journal.author.id = req.user._id;
-                journal.author.username = req.user.username;
-
-                journal.save();
-                userFound.journals.push(journal);
-                userFound.save();
-                res.redirect('/user');
+                if(err)
+                {
+                    console.log(err);
+                }
+                else
+                {
+                    journal.text = req.body.journalText;
+                    journal.author.id = req.params.id;
+                    journal.author.username = userFound.username;
+                    journal.save();
+                    userFound.journals.push(journal);
+                    userFound.save();
+                    res.redirect('/user/:id/journal');
+                }
             })
         }
 
     })
+});
+
+//EDIT journal
+router.get("/user/:id/journal/:journal_id/edit", function(req, res){
+    Journal.findById(req.params.journal_id, function(err, foundJournal){
+       if(err){
+           res.redirect("back");
+       } else {
+         res.render("journal/edit", {user_id: req.params.id, journal: foundJournal});
+       }
+    });
+ });
+
+
+ // UPDATE journal
+router.put("/user/:id/journal/:journal_id", function(req, res){
+    Journal.findByIdAndUpdate(req.params.journal_id, req.body.journal, function(err, updatedJournal){
+       if(err){
+           res.redirect("back");
+       } else {
+           res.redirect("/user/" + req.params.id );
+       }
+    });
+ });
+
+
+// Journal DESTROY ROUTE
+router.delete("/user/:id/journal/:journal_id", function(req, res){
+    //findByIdAndRemove
+    Journal.findByIdAndRemove(req.params.journal_id, function(err){
+       if(err){
+           res.redirect("back");
+       } else {
+           res.redirect("/use/" + req.params.id);
+       }
+    });
 });
 
 
