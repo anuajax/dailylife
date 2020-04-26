@@ -3,9 +3,9 @@ var router = express.Router({mergeParams:true});
 var User = require("../models/User");
 var Journal =  require("../models/journal");
 
-//Index route to show all routes
+//Index route to show all journals
 router.get("/user/:id/journal",function(req,res){
-    User.findById(req.params.id, function(err, user){
+    User.findById(req.params._id).populate("journals").exec(function(err,user){
         if(err)
         {
             console.log(err);
@@ -14,20 +14,19 @@ router.get("/user/:id/journal",function(req,res){
         {
             res.render("journal/index",{user: user});
         }
-    })
-
-});
-
+    });
+    });
 
 //New Journal
 router.get("/user/:id/journal/new", function(req,res){
-	User.findById(req.params.id, function(err, user){
+	User.findById(req.params._id, function(err, user){
         if(err)
         {
             console.log(err);
         }
         else
         {
+            console.log(user);
             res.render("journal/new",{user: user});
         }
     })
@@ -35,7 +34,7 @@ router.get("/user/:id/journal/new", function(req,res){
 
 //CREATE - add new journal to DB
 router.post("/user/:id/journal", function(req, res){
-    User.findById(req.params.id, function(err, userFound){
+    User.findById(req.params._id, function(err, userFound){
         if(err)
         {
             res.redirect("/user");
@@ -53,9 +52,11 @@ router.post("/user/:id/journal", function(req, res){
                     journal.author.id = req.params.id;
                     journal.author.username = userFound.username;
                     journal.save();
+                    console.log(journal);
                     userFound.journals.push(journal);
                     userFound.save();
-                    res.redirect('/user/:id/journal');
+                    res.redirect('/user/' + req.params.id + "/journal");
+
                 }
             })
         }
@@ -81,7 +82,7 @@ router.put("/user/:id/journal/:journal_id", function(req, res){
        if(err){
            res.redirect("back");
        } else {
-           res.redirect("/user/" + req.params.id );
+           res.redirect('/user/' + req.params.id + "/journal");
        }
     });
  });
@@ -94,7 +95,7 @@ router.delete("/user/:id/journal/:journal_id", function(req, res){
        if(err){
            res.redirect("back");
        } else {
-           res.redirect("/use/" + req.params.id);
+           res.redirect('/user/' + req.params.id + "/journal");
        }
     });
 });

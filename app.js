@@ -29,6 +29,10 @@ var articleRoutes   =   require("./routes/article");
 
 
 
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+mongoose.set('useUnifiedTopology', true);
 //Database connection
 mongoose.connect("mongodb://localhost:27017/Dailylife", { useNewUrlParser: true , useUnifiedTopology: true  });
 //-----------------*--------------------*-----------------------------------------*-----------------------------------
@@ -44,13 +48,14 @@ app.use(flash());
 //-------------------------------------------------------------------------------------------------------------------
 //PASSPORT CONFIG :
 app.use(methodOverride("_method"));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(require("express-session")({
     secret: "My life is mine i will decide what to do",
     resave: false,
     saveUninitialized: true
 }));  
-app.use(passport.initialize());
-app.use(passport.session());
+
 // passport.use(new LocalStrategy(
 //     function(username, password, done) {
 //       User.findOne({ username: username }, function(err, user) {
@@ -79,8 +84,13 @@ app.use(function(req,res,next){
 app.get("/",function(req,res){
     res.render("landing");
 });
-
-
+app.get("/user/:id",function(req,res){ 
+    User.findById(req.params.id,function(err,user){
+        console.log(user);
+        res.render("home.ejs",{user: user});
+    });
+});
+   
 app.use(journalRoutes);
 app.use("/comments",commentRoutes);
 app.use(authRoutes);

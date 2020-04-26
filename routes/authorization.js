@@ -6,6 +6,7 @@ var async             =   require("async");
 var nodemailer        =   require("nodemailer");
 var crypto            =   require("crypto");
 var validator         =   require("express-validator");
+var { isLoggedIn } = require('../middleware');
 //Landing Page:
 router.get("/",(req,res) => {res.render("landing.ejs")});
 
@@ -101,7 +102,7 @@ router.post("/login",function(req,res){
 //  successRedirect : "/comments/new",
 failureRedirect: "/login",
 failureFlash: 'Invalid username/password'});
-res.redirect(req.session.returnTo || '/comments/new');
+res.redirect(req.session.returnTo || '/user/'+user._id);
  
     }
     else {return res.redirect("/login");}
@@ -232,5 +233,14 @@ router.post('/reset/:token', function(req, res) {
       res.redirect('/login');
     });
   });
-
+  function isLoggedIn(req,res,next)
+  {
+     if(req.isAuthenticated())
+     {
+         return next();
+     }
+     req.flash("error","Please Login first");
+     res.redirect("/login");
+  
+  }
 module.exports = router;

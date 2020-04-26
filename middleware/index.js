@@ -2,7 +2,7 @@ var Comment = require("../models/comments");
 
 
 
-var middlewareObj={}
+var middlewareObj={};
 
 middlewareObj.commentOwner = function(res,req,next){
     if(req.isAuthenticated()){
@@ -24,7 +24,7 @@ middlewareObj.commentOwner = function(res,req,next){
 
 
 
-middlewareObj.isLoggedIn = function isLoggedIn(res,req,next){
+middlewareObj.isLoggedIn = function(res,req,next){
     if(req.isAuthenticated()){
        return next();
     } 

@@ -9,6 +9,8 @@ var journalSchema = mongoose.Schema({
 		},
 		username: String
 	}
+}, {
+	timestamps: true
 });
 
 module.exports = mongoose.model("Journal", journalSchema);
