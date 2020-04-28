@@ -1,0 +1,28 @@
+
+ul{
+    display: flex;
+    list-style-type: none;
+    margin-left: 60vw;
+
+}
+nav > li{
+    list-style-type: none;
+    color: bisque;
+}
+a{
+    padding-left: 10px;
+    text-decoration: none;
+    color: white;
+    
+}
+.card {
+    margin: 0 auto; /* Added */
+    float: none; /* Added */
+    margin-bottom: 10px; /* Added */
+}
+
+.show-card {
+    width: 100%;
+    height: 40vw;
+    object-fit: cover;
+}

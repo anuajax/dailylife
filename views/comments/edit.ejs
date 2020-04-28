@@ -1,0 +1,13 @@
+<%- include("../partials/header")%>
+<div class="container">
+    <div class="row">
+        <form action="/comments?_method=PUT" action="POST">
+            <div class="form-group">
+                <label for="commentArea"></label>
+                    <textarea class="form-control" id="commentArea" rows="3" name="comment" placeholder="comment"></textarea>
+            </div>
+            <button class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+<%- include("../partials/footer")%>
