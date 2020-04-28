@@ -86,9 +86,9 @@ app.get("/",function(req,res){
 
 
 app.use(journalRoutes);
-app.use("/comments",commentRoutes);
+app.use(commentRoutes);
 app.use(authRoutes);
-app.use("/article",articleRoutes);
+app.use(articleRoutes);
 
 
 

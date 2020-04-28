@@ -1,0 +1,32 @@
+<%- include("../partials/header") -%>
+
+
+<div class="container">
+    <header class="jumbotron text-left">
+        <h3><%= user.firstname%> Articles</h3>
+        <a href="/user/<%= user._id%>/article/new" class="badge badge-primary">Add new Article</a>
+    </header>
+
+    <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+        <%  user.article.forEach(function(articleFound){ %>
+            <div class="col-md-3 col-sm-6">
+                <div class="thumbnail">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title"><%= articleFound.title %></h2>
+                            <!-- <img class="card-img-top" src="<%= articleFound.image %>" >
+                            <p class="card-title"><%= articleFound.text %></p>
+                            <h5 class="card-title"><%= articleFound.updatedAt.toDateString() %></h5> -->
+                            <a href="/user/<%= user._id%>/article/<%=articleFound._id %>"  class="card-link badge badge-primary">View</a>
+                        </div>
+                        
+                    </div>  	
+                </div>	
+            </div>
+        <% }); %>
+        </div>
+
+</div>
+
+
+<%- include("../partials/footer") -%>

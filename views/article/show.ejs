@@ -1,0 +1,30 @@
+<%- include("../partials/header") -%>
+
+
+<div class="container">
+
+<header class="jumbotron text-left">
+<h2><%= article.title %></h2>    
+<h5>Article written on <%= article.updatedAt.toDateString() %></h5>
+<a href="/user/<%= user_id%>/article/<%=article._id %>/edit"  class="card-link badge badge-primary">Edit</a>
+
+</header>
+
+
+<div class="col-md-3 col-sm-6">
+        <div class="card text-center" style="width: 67rem;">
+            <div class="card-body">
+                <img class="card-img-top show-card" src="<%= article.image %>" >
+                <p class="card-text"><%= article.text %></p>
+            </div>
+        </div>
+</div>
+
+
+
+
+
+</div>
+
+
+<%- include("../partials/footer") -%>
