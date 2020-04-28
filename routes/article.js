@@ -85,7 +85,7 @@ router.get("/user/:id/article/:article_id/edit", function(req, res){
  });
 
 
- // UPDATE journal
+ // UPDATE article
 router.put("/user/:id/article/:article_id", function(req, res){
     Article.findByIdAndUpdate(req.params.article_id, req.body.article, function(err, updatedArticle){
        if(err){
@@ -99,7 +99,7 @@ router.put("/user/:id/article/:article_id", function(req, res){
 
 //SHOW Article
 router.get("/user/:id/article/:article_id",function(req,res){
-    Article.findById(req.params.article_id, function(err, foundArticle){
+    Article.findById(req.params.article_id).populate("comment").exec(function(err, foundArticle){
         if(err){
             res.redirect("back");
         } else {
