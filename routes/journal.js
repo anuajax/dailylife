@@ -5,7 +5,7 @@ var Journal =  require("../models/journal");
 
 //Index route to show all journals
 router.get("/user/:id/journal",function(req,res){
-    User.findById(req.params._id).populate("journals").exec(function(err,user){
+    User.findById(req.params.id).populate("journals").exec(function(err,user){
         if(err)
         {
             console.log(err);
@@ -19,7 +19,7 @@ router.get("/user/:id/journal",function(req,res){
 
 //New Journal
 router.get("/user/:id/journal/new", function(req,res){
-	User.findById(req.params._id, function(err, user){
+	User.findById(req.params.id, function(err, user){
         if(err)
         {
             console.log(err);
@@ -34,7 +34,7 @@ router.get("/user/:id/journal/new", function(req,res){
 
 //CREATE - add new journal to DB
 router.post("/user/:id/journal", function(req, res){
-    User.findById(req.params._id, function(err, userFound){
+    User.findById(req.params.id, function(err, userFound){
         if(err)
         {
             res.redirect("/user");

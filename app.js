@@ -87,7 +87,7 @@ app.get("/",function(req,res){
 app.get("/user/:id",function(req,res){ 
     User.findById(req.params.id,function(err,user){
         console.log(user);
-        res.render("home.ejs",{user: user});
+        res.render("home.ejs",{user:user});
     });
 });
    

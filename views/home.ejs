@@ -2,7 +2,7 @@
 <h2>Welcome you are logged in !! This Is your home page!</h2>
 <h3><%= new Date() %></h3>
 <h4>Here We have posts(articles)!!</h4>
-<a href="/user/:id/journal" class="btn btn-sm btn-primary">My Journals</a>
-<a href="/user/:id/journal" class="btn btn-sm btn-success">My Accounts Calendar(not setup yet for now go to journals)</a>
+<a href="/user/<%=user._id%>/journal" class="btn btn-sm btn-primary">My Journals</a>
+<a href="/user/<%=user._id%>/journal" class="btn btn-sm btn-success">My Accounts Calendar(not setup yet for now go to journals)</a>
 
 <%- include("partials/footer") -%>
