@@ -88,16 +88,15 @@ router.put("/user/:id/journal/:journal_id", function(req, res){
  });
 
 
-// Journal DESTROY ROUTE
-router.delete("/user/:id/journal/:journal_id", function(req, res){
-    //findByIdAndRemove
-    Journal.findByIdAndRemove(req.params.journal_id, function(err){
-       if(err){
-           res.redirect("back");
-       } else {
-           res.redirect('/user/' + req.params.id + "/journal");
-       }
-    });
+//SHOW Journal
+router.get("/user/:id/journal/:journal_id",function(req,res){
+    Journal.findById(req.params.journal_id, function(err, foundJournal){
+        if(err){
+            res.redirect("back");
+        } else {
+          res.render("journal/show", {user_id: req.params.id, journal: foundJournal});
+        }
+     });
 });
 
 

@@ -1,0 +1,47 @@
+<%- include("../partials/header") -%>
+
+
+<div class="container">
+
+<header class="jumbotron text-left">
+<h2><%= article.title %></h2>    
+<h5>Article written on <%= article.updatedAt.toDateString() %></h5>
+<a href="/user/<%= user_id%>/article/<%=article._id %>/edit"  class="card-link badge badge-primary">Edit</a>
+
+</header>
+
+
+<div class="col-md-3 col-sm-6">
+        <div class="card text-center" style="width: 67rem;">
+            <div class="card-body">
+                <img class="card-img-top show-card" src="<%= article.image %>" >
+                <p class="card-text"><%= article.text %></p>
+                <a href="/user/<%= user_id %>/article/<%=article._id %>/comments/new" class="badge badge-primary">Add New Comment</a>
+                <h5>View All Comments</h5>
+                <%  article.comment.forEach(function(commentFound){ %>
+                    <!-- <div class="col-md-3 col-sm-6">
+                        <div class="thumbnail">
+                            <div class="card">
+                                <div class="card-body"> -->
+                                    <p class="card-title"><%= commentFound.text %>
+                                    <a href="/user/<%= user_id %>/article/<%= article._id %>/comments/<%= commentFound._id %>/edit" class="badge badge-primary">Edit Comment</a>
+                                    </p>
+                                    
+                                <!-- </div>
+                                
+                            </div>  	
+                        </div>	
+                    </div> -->
+                <% }); %>
+            </div>
+        </div>
+</div>
+
+
+
+
+
+</div>
+
+
+<%- include("../partials/footer") -%>

@@ -1,0 +1,27 @@
+<%- include("../partials/header") -%>
+
+
+<div class="container">
+
+<header class="jumbotron text-left">
+<h3>Entry on <%= journal.updatedAt.toDateString() %></h3>
+</header>
+
+
+<div class="col-md-3 col-sm-6">
+        <div class="card text-center" style="width: 67rem;">
+            <div class="card-body">
+                <p class="card-text"><%= journal.text %></p>
+                <a href="/user/<%= user_id%>/journal/<%=journal._id %>/edit"  class="card-link badge badge-primary">Edit</a>
+            </div>
+        </div>
+</div>
+
+
+
+
+
+</div>
+
+
+<%- include("../partials/footer") -%>

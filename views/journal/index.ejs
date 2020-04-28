@@ -13,8 +13,9 @@
 			<div class="card">
 				<div class="card-body">
 					<h5 class="card-title"><%= journalFound.updatedAt.toDateString() %></h5>
-					<p><%= journalFound.text  %></p>
-					<a href="/user/<%= user._id%>/journal/<%=journalFound._id %>/edit"  class="card-link badge badge-primary">Edit</a>
+					<!-- <p><%= journalFound.text  %></p> -->
+					<!-- <a href="/user/<%= user._id%>/journal/<%=journalFound._id %>/edit"  class="card-link badge badge-primary">Edit</a> -->
+					<a href="/user/<%= user._id%>/journal/<%=journalFound._id %>"  class="card-link badge badge-primary">View</a>
 				</div>
 				
 			</div>  	
@@ -23,6 +24,7 @@
 <% }); %>
 </div>
 
+</div>
 
 
 
