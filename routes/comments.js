@@ -1,15 +1,14 @@
 var express    = require("express"),
     router     = express.Router({mergeParams:true}),
     article    = require("../models/article"),
-    comment    = require("../models/comments"),
-    middleWare = require("../middleware");   
+    comment    = require("../models/comments")
 
 //================\\
 // COMMENT ROUTES \\ 
 //================\\
 
 //ADD a new comment
-router.get("/new",function(req,res){
+router.get("/comments/new",function(req,res){
     article.findById(req.params.id,function(err,article){
         if(err){
             router.redirect("back");
@@ -20,7 +19,7 @@ router.get("/new",function(req,res){
 });
 
 //CREATE a comment
-router.post("/new",function(req,res){
+router.post("/comments/new",function(req,res){
     article.findById(req.params.id,function(err,article){
         if(err){
             res.redirect("back");
@@ -30,7 +29,7 @@ router.post("/new",function(req,res){
     });
 })
 //EDIT your comment
-router.get("/:comment_id/edit",function(req,res){
+router.get("/comments/:comment_id/edit",function(req,res){
     comment.findById(req.params.comment_id,function(err,foundComment){
         if(err){
             res.redirect("back");
@@ -41,7 +40,7 @@ router.get("/:comment_id/edit",function(req,res){
 });
 
 //Save updated comment
-router.put("/:comment_id",function(req,res){
+router.put("/comments/:comment_id",function(req,res){
     comment.findByIdAndUpdate(req.params.id,function(err,updatedComment){
         if(err){
             res.redirect("back");
@@ -52,7 +51,7 @@ router.put("/:comment_id",function(req,res){
 })
 
 //DELETE comment
-router.delete("/:comment_id",function(req,res){
+router.delete("/comments/:comment_id",function(req,res){
     comment.findByIdAndDelete("req.params.id",function(err,commentDel){
         if(err){
             res.redirect("back");
