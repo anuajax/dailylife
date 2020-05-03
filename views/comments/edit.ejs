@@ -1,13 +1,19 @@
-<%- include("../partials/header")%>
-<div class="container">
-    <div class="row">
-        <form action="/comments?_method=PUT" action="POST">
-            <div class="form-group">
-                <label for="commentArea"></label>
-                    <textarea class="form-control" id="commentArea" rows="3" name="comment" placeholder="comment"></textarea>
-            </div>
-            <button class="btn btn-primary">Submit</button>
-        </form>
+<%- include("../partials/header") -%>
+
+
+<div style="width: 30%; margin:30px auto">
+
+<h4>Edit Comment</h4>    
+
+<form action="/user/<%= user_id %>/article/<%= article_id %>/comments/<%= comment._id %>?_method=PUT" method="POST">
+    <div class="form-group">
+		<input class="form-control" type="text" name="comment[text]" value="<%= comment.text %>">
+	</div>
+    <div class="form-group">
+        <button class="btn btn-lg btn-primary btn-block">Submit!</button>
     </div>
+</form>
+
 </div>
-<%- include("../partials/footer")%>
+
+<%- include("../partials/footer") -%>

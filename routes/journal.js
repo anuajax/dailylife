@@ -5,7 +5,7 @@ var Journal =  require("../models/journal");
 
 //Index route to show all journals
 router.get("/user/:id/journal",function(req,res){
-    User.findById(req.params.id).populate("journals").exec(function(err, user){
+    User.findById(req.params.id).populate("journals").exec(function(err,user){
         if(err)
         {
             console.log(err);
@@ -15,7 +15,7 @@ router.get("/user/:id/journal",function(req,res){
             res.render("journal/index",{user: user});
         }
     });
-});
+    });
 
 //New Journal
 router.get("/user/:id/journal/new", function(req,res){

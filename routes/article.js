@@ -1,8 +1,10 @@
 var express     = require("express"),
+    router      = express.Router(),
     router      = express.Router({mergeParams:true}),
     User        = require("../models/User"),
-    Article     = require("../models/article")
-//================\\
+    middleware  = require("../middleware/index"),
+     Article    = require("../models/article");
+    
 // ARTICLE ROUTES \\ 
 //================\\
 
@@ -85,7 +87,7 @@ router.get("/user/:id/article/:article_id/edit", function(req, res){
  });
 
 
- // UPDATE journal
+ // UPDATE article
 router.put("/user/:id/article/:article_id", function(req, res){
     Article.findByIdAndUpdate(req.params.article_id, req.body.article, function(err, updatedArticle){
        if(err){
@@ -99,7 +101,7 @@ router.put("/user/:id/article/:article_id", function(req, res){
 
 //SHOW Article
 router.get("/user/:id/article/:article_id",function(req,res){
-    Article.findById(req.params.article_id, function(err, foundArticle){
+    Article.findById(req.params.article_id).populate("comment").exec(function(err, foundArticle){
         if(err){
             res.redirect("back");
         } else {
